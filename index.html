@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PocketGuard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <main>
+      <section id="login-screen" class="screen active">
+        <div class="card auth-card">
+          <svg class="logo" viewBox="0 0 24 24" fill="#1f3db7">
+            <path d="M12 2L3 7V12C3 19 12 22 12 22S21 19 21 12V7L12 2Z" />
+          </svg>
+          <h1>PocketGuard</h1>
+          <p>Welcome back. Please login to continue</p>
+          <form id="login-form">
+            <label>
+              Username
+              <input type="text" id="username" placeholder="Username" required />
+            </label>
+            <label>
+              Password
+              <input type="password" id="password" placeholder="Password" required />
+            </label>
+            <button type="submit" class="primary-btn">Sign In</button>
+            <p class="form-toggle">Don't have an account? <button type="button" class="link-btn" data-screen="signup-screen">Sign Up</button></p>
+          </form>
+        </div>
+      </section>
+
+      <section id="signup-screen" class="screen">
+        <div class="card auth-card">
+          <svg class="logo" viewBox="0 0 24 24" fill="#1f3db7">
+            <path d="M12 2L3 7V12C3 19 12 22 12 22S21 19 21 12V7L12 2Z" />
+          </svg>
+          <h1>PocketGuard</h1>
+          <p>Create your account to get started</p>
+          <form id="signup-form">
+            <label>
+              Username
+              <input type="text" id="signup-username" placeholder="Choose a username" required />
+            </label>
+            <label>
+              Password
+              <input type="password" id="signup-password" placeholder="Enter password" required />
+            </label>
+            <label>
+              Confirm Password
+              <input type="password" id="signup-confirm" placeholder="Confirm password" required />
+            </label>
+            <button type="submit" class="primary-btn">Create Account</button>
+            <p class="form-toggle">Already have an account? <button type="button" class="link-btn" data-screen="login-screen">Sign In</button></p>
+          </form>
+        </div>
+
+      <section id="dashboard-screen" class="screen">
+        <div class="top-card card">
+          <div class="top-card-header">
+            <div>
+              <p>Welcome, <span id="user-display">User</span></p>
+              <h2>$<span id="spent-amount">2,579</span>/<span id="budget-amount">3,000</span></h2>
+              <p class="subtle">spent this month</p>
+            </div>
+            <button class="shield-btn" data-screen="account-screen" title="Manage Account">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </button>
+          </div>
+          <div class="line-chart">
+            <span class="chart-label">Spending Summary</span>
+            <svg class="chart-svg" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+              <polyline points="10,80 50,60 100,55 150,40 200,30 250,20 290,10" fill="none" stroke="#1f3db7" stroke-width="2"/>
+              <polyline points="10,80 50,75 100,70 150,65 200,60 250,55 290,50" fill="none" stroke="rgba(31,61,183,0.3)" stroke-width="2"/>
+              <defs>
+                <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#1f3db7;stop-opacity:0.1" />
+                  <stop offset="100%" style="stop-color:#1f3db7;stop-opacity:0" />
+                </linearGradient>
+              </defs>
+              <polygon points="10,80 50,60 100,55 150,40 200,30 250,20 290,10 290,100 10,100" fill="url(#chartGradient)"/>
+            </svg>
+          </div>
+          <div class="budget-alert card alert-card">
+            <div class="alert-header">
+              <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3.05h16.94a2 2 0 0 0 1.71-3.05L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <p><strong>Budget Alert</strong></p>
+            </div>
+            <p>You’ve overspent by $557 on Entertainment</p>
+          </div>
+          <div class="spending-list">
+            <div class="spending-item"><span>Groceries</span><span>$852</span></div>
+            <div class="spending-item"><span>Transport</span><span>$210</span></div>
+            <div class="spending-item"><span>Entertainment</span><span>$1,105</span></div>
+          </div>
+          <div class="action-row">
+            <button class="primary-btn" data-screen="add-transaction-screen">Add Transaction</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="spending-screen" class="screen">
+        <div class="card">
+          <div class="top-card-header">
+            <div>
+              <h2>Spending Breakdown</h2>
+              <p class="subtle">$<span id="breakdown-total">2,579</span> spent this month</p>
+            </div>
+            <div class="shield"></div>
+          </div>
+          <div class="tabs">
+            <button class="tab active" data-view="week">Week</button>
+            <button class="tab" data-view="month">Month</button>
+          </div>
+          <div id="week-view" class="spending-view active">
+            <div class="spending-list">
+              <div class="spending-item"><span>Groceries</span><span>$200</span></div>
+              <div class="spending-item"><span>Transport</span><span>$50</span></div>
+              <div class="spending-item"><span>Entertainment</span><span>$300</span></div>
+              <div class="spending-item"><span>Utilities</span><span>$60</span></div>
+            </div>
+          </div>
+          <div id="month-view" class="spending-view">
+            <div class="spending-list">
+              <div class="spending-item"><span>Groceries</span><span>$852</span></div>
+              <div class="spending-item"><span>Transport</span><span>$210</span></div>
+              <div class="spending-item"><span>Entertainment</span><span>$1,105</span></div>
+              <div class="spending-item"><span>Rent</span><span>$500</span></div>
+              <div class="spending-item"><span>Utilities</span><span>$210</span></div>
+              <div class="spending-item"><span>Eating Out</span><span>$1,105</span></div>
+              <div class="spending-item"><span>Savings</span><span>$210</span></div>
+              <div class="spending-item"><span>Miscellaneous</span><span>$1,105</span></div>
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="secondary-btn" data-screen="dashboard-screen">Back</button>
+            <button class="primary-btn" data-screen="add-transaction-screen">Add Transaction</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="budget-screen" class="screen">
+        <div class="card">
+          <h2>Your Budget</h2>
+          <div class="budget-summary">
+            <div>
+              <p>current month target</p>
+              <h3>$<span id="target-amount">3,000</span></h3>
+            </div>
+            <div>
+              <p>actual spending</p>
+              <h3>$<span id="actual-amount">2,579</span></h3>
+            </div>
+          </div>
+          <div class="spending-list">
+            <div class="spending-item"><span>Food</span><span>$800 target</span></div>
+            <div class="spending-item"><span>Housing & Utilities</span><span>$1,000 target</span></div>
+            <div class="spending-item"><span>Savings</span><span>$1,000 target</span></div>
+            <div class="spending-item"><span>Leisure</span><span>$200 target</span></div>
+          </div>
+          <div class="settings-row">
+            <p>Alert me overall when spending hits</p>
+            <select id="alert-threshold">
+              <option value="60">60%</option>
+              <option value="70">70%</option>
+              <option selected value="80">80%</option>
+              <option value="90">90%</option>
+            </select>
+          </div>
+          <button class="secondary-btn" data-screen="update-budget-screen">Update Monthly Budget</button>
+        </div>
+      </section>
+
+      <section id="update-budget-screen" class="screen">
+        <div class="card auth-card">
+          <h2>Update Monthly Budget</h2>
+          <form id="budget-form">
+            <label>
+              Enter Amount
+              <input type="number" id="budget-input" min="0" placeholder="Enter Amount" required />
+            </label>
+            <button type="submit" class="primary-btn">Update</button>
+            <button type="button" class="secondary-btn" data-screen="budget-screen">Cancel</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="add-transaction-screen" class="screen">
+        <div class="card auth-card">
+          <h2>Add Transaction</h2>
+          <form id="transaction-form">
+            <label>
+              Enter Amount
+              <input type="number" id="transaction-amount" step="0.01" placeholder="Enter Amount" required />
+            </label>
+            <label>
+              Select Category
+              <select id="transaction-category" required>
+                <option value="Groceries">Groceries</option>
+                <option value="Transport">Transport</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Rent">Rent</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Eating Out">Eating Out</option>
+                <option value="Savings">Savings</option>
+                <option value="Miscellaneous">Miscellaneous</option>
+              </select>
+            </label>
+            <label>
+              Select Date
+              <input type="date" id="transaction-date" required />
+            </label>
+            <button type="submit" class="primary-btn">Add</button>
+            <button type="button" class="secondary-btn" data-screen="dashboard-screen">Cancel</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="success-screen" class="screen">
+        <div class="card auth-card success-card">
+          <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <h2>Transaction Added</h2>
+          <p class="subtle">Your transaction has been successfully recorded</p>
+          <div class="action-row">
+            <button class="primary-btn" data-screen="dashboard-screen">Back to Dashboard</button>
+            <button class="secondary-btn" data-screen="add-transaction-screen">Add Another</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="report-screen" class="screen">
+        <div class="card">
+          <h2>Your Reports</h2>
+          <div class="tabs">
+            <button class="tab active" data-tab="pie">Pie</button>
+            <button class="tab" data-tab="habits">Habits</button>
+          </div>
+          <div id="pie-view" class="tab-content active">
+            <div class="chart-card">
+              <div class="chart-legend">
+                <span class="legend-item"><span class="dot yellow"></span>Entertainment</span>
+                <span class="legend-item"><span class="dot blue"></span>Transport</span>
+                <span class="legend-item"><span class="dot red"></span>Groceries</span>
+              </div>
+              <svg class="pie-chart-svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#f59e0b" stroke-width="30" stroke-dasharray="131.95 314" stroke-dashoffset="0"/>
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#ef4444" stroke-width="30" stroke-dasharray="104.72 314" stroke-dashoffset="-131.95"/>
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#2563eb" stroke-width="30" stroke-dasharray="77.33 314" stroke-dashoffset="-236.67"/>
+              </svg>
+            </div>
+          </div>
+          <div id="habits-view" class="tab-content">
+            <div class="details-list">
+              <div class="detail-item">
+                <span>Entertainment</span>
+                <span>$1,105</span>
+                <span class="percentage">43%</span>
+              </div>
+              <div class="detail-item">
+                <span>Groceries</span>
+                <span>$852</span>
+                <span class="percentage">33%</span>
+              </div>
+              <div class="detail-item">
+                <span>Transport</span>
+                <span>$210</span>
+                <span class="percentage">8%</span>
+              </div>
+              <div class="detail-item">
+                <span>Utilities</span>
+                <span>$210</span>
+                <span class="percentage">8%</span>
+              </div>
+              <div class="detail-item">
+                <span>Eating Out</span>
+                <span>$202</span>
+                <span class="percentage">8%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="account-screen" class="screen">
+        <div class="card">
+          <h2>Manage Account</h2>
+          <div class="account-info">
+            <p class="info-label">Current User</p>
+            <p class="info-value" id="account-username">User</p>
+          </div>
+          <div class="account-stats">
+            <div class="stat-box">
+              <span class="stat-label">Total Transactions</span>
+              <span class="stat-value" id="transaction-count">3</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Total Spent</span>
+              <span class="stat-value">$<span id="total-spent-account">2,579</span></span>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <button class="secondary-btn" id="logout-btn">Log Out</button>
+          <button class="danger-btn" id="delete-btn">Delete Account & Data</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-screen="dashboard-screen" title="Dashboard">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span class="nav-label">Dashboard</span>
+    </button>
+    <button class="nav-btn" data-screen="budget-screen" title="Budget">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="1"></circle>
+        <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 0l4.24-4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08 0l4.24 4.24"></path>
+      </svg>
+      <span class="nav-label">Budget</span>
+    </button>
+    <button class="nav-btn" data-screen="report-screen" title="Reports">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="2" x2="12" y2="22"></line>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      </svg>
+      <span class="nav-label">Reports</span>
+    </button>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
