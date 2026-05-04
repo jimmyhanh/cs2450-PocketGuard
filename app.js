@@ -9,6 +9,18 @@ const userDisplay = document.getElementById('user-display');
 const budgetAmount = document.getElementById('budget-amount');
 const targetAmount = document.getElementById('target-amount');
 const actualAmount = document.getElementById('actual-amount');
+const overallAmount = document.getElementById('overall-amount');
+
+const groceriesAmount = document.getElementById('groceriesAmount');
+const transportAmount = document.getElementById('transportAmount');
+const entertainmentAmount = document.getElementById('entertainmentAmount');
+const rentAmount = document.getElementById('rentAmount');
+const eatingOutAmount = document.getElementById('eatingOutAmount');
+const savingsAmount = document.getElementById('savingsAmount');
+
+const budgetAlert = document.getElementById("budgetAlert");
+const overspendAmount = document.getElementById("budgetOverspending");
+
 const spentAmount = document.getElementById('spent-amount');
 const breakdownTotal = document.getElementById('breakdown-total');
 const usernameInput = document.getElementById('username');
@@ -25,22 +37,22 @@ const totalSpentAccount = document.getElementById('total-spent-account');
 
 const defaultData = {
   budget: 3000,
-  spent: 2579,
+  spent: 0,
   transactions: [
-    { category: 'Groceries', amount: 852, date: '2026-04-01' },
-    { category: 'Transport', amount: 210, date: '2026-04-04' },
-    { category: 'Entertainment', amount: 1105, date: '2026-04-10' }
+    { category: 'Groceries', amount: 0, date: '2026-04-01' },
+    { category: 'Transport', amount: 0, date: '2026-04-04' },
+    { category: 'Entertainment', amount: 0, date: '2026-04-10' },
+    { category: 'Rent', amount: 0, date: '2026-04-10' },
+    { category: 'Eating Out', amount: 0, date: '2026-04-10' },
+    { category: 'Savings', amount: 0, date: '2026-04-10' },
   ]
 };
 
 let state = {
   user: 'User',
   budget: 3000,
-  spent: 2579,
+  spent: 0,
   transactions: [
-    { category: 'Groceries', amount: 852, date: '2026-04-01' },
-    { category: 'Transport', amount: 210, date: '2026-04-04' },
-    { category: 'Entertainment', amount: 1105, date: '2026-04-10' }
   ]
 };
 
@@ -69,16 +81,59 @@ function showScreen(screenId) {
   bottomNav.style.display = (screenId === 'login-screen' || screenId === 'signup-screen') ? 'none' : 'flex';
 }
 
+function updateSpending() {
+  const groceriesTotal = state.transactions
+  .filter(tx => tx.category === 'Groceries')
+  .reduce((sum, tx) => sum + tx.amount, 0);
+
+  const transportTotal = state.transactions
+  .filter(tx => tx.category === 'Transport')
+  .reduce((sum, tx) => sum + tx.amount, 0);
+
+  const entertainmentTotal = state.transactions
+  .filter(tx => tx.category === 'Entertainment')
+  .reduce((sum, tx) => sum + tx.amount, 0);
+
+  const rentTotal = state.transactions
+  .filter(tx => tx.category === 'Rent')
+  .reduce((sum, tx) => sum + tx.amount, 0);
+
+  const eatingOutTotal = state.transactions
+  .filter(tx => tx.category === 'Eating Out')
+  .reduce((sum, tx) => sum + tx.amount, 0);
+
+  const savingsTotal = state.transactions
+  .filter(tx => tx.category === 'Savings')
+  .reduce((sum, tx) => sum + tx.amount, 0);
+
+  groceriesAmount.textContent = `$${groceriesTotal}`;
+  transportAmount.textContent = `$${transportTotal}`;
+  entertainmentAmount.textContent = `$${entertainmentTotal}`;
+  rentAmount.textContent = `$${rentTotal}`;
+  eatingOutAmount.textContent = `$${eatingOutTotal}`;
+  savingsAmount.textContent = `$${savingsTotal}`;
+
+  let totalAmount = groceriesTotal + transportTotal + entertainmentTotal + rentTotal + eatingOutTotal + savingsTotal;
+
+  actualAmount.textContent = `${totalAmount}`;
+  overallAmount.textContent = `${totalAmount}`;
+
+  if (totalAmount >= state.budget) {
+      budgetAlert.style.display = "block";
+      overspendAmount.textContent = `$${totalAmount - state.budget}`;
+  }
+}
+
 function updateSummary() {
   userDisplay.textContent = state.user;
   budgetAmount.textContent = state.budget.toLocaleString();
   targetAmount.textContent = state.budget.toLocaleString();
   actualAmount.textContent = state.spent.toLocaleString();
   spentAmount.textContent = state.spent.toLocaleString();
-  breakdownTotal.textContent = state.spent.toLocaleString();
   accountUsername.textContent = state.user;
   transactionCount.textContent = state.transactions.length;
   totalSpentAccount.textContent = state.spent.toLocaleString();
+  updateSpending();
 }
 
 function initialize() {
@@ -212,6 +267,7 @@ transactionForm.addEventListener('submit', event => {
   transactionCategory.selectedIndex = 0;
   transactionDate.valueAsDate = new Date();
   updateSummary();
+  updateSpending();
   showScreen('success-screen');
 });
 
