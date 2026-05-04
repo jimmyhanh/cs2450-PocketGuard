@@ -256,6 +256,10 @@ select {
   margin-bottom: 18px;
 }
 
+.budget-alert {
+  display: none;
+}
+
 .tab {
   flex: 1;
   padding: 12px;

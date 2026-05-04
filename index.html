@@ -86,7 +86,8 @@
               <polygon points="10,80 50,60 100,55 150,40 200,30 250,20 290,10 290,100 10,100" fill="url(#chartGradient)"/>
             </svg>
           </div>
-          <div class="budget-alert card alert-card">
+
+          <div class="budget-alert card alert-card" id="budgetAlert">
             <div class="alert-header">
               <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3.05h16.94a2 2 0 0 0 1.71-3.05L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
@@ -95,12 +96,16 @@
               </svg>
               <p><strong>Budget Alert</strong></p>
             </div>
-            <p>You’ve overspent by $557 on Entertainment</p>
+            <p>You’ve overspent by <span id="budgetOverspending">$XX</span>.</p>
           </div>
+
           <div class="spending-list">
-            <div class="spending-item"><span>Groceries</span><span>$852</span></div>
-            <div class="spending-item"><span>Transport</span><span>$210</span></div>
-            <div class="spending-item"><span>Entertainment</span><span>$1,105</span></div>
+            <div class="spending-item"><span>Groceries</span><span id="groceriesAmount">$XXX</span></div>
+            <div class="spending-item"><span>Transport</span><span id="transportAmount">$XXX</span></div>
+            <div class="spending-item"><span>Entertainment</span><span id="entertainmentAmount">$XXX</span></div>
+            <div class="spending-item"><span>Rent</span><span id="rentAmount">$XXX</span></div>
+            <div class="spending-item"><span>Eating Out</span><span id="eatingOutAmount">$XXX</span></div>
+            <div class="spending-item"><span>Savings</span><span id="savingsAmount">$XXX</span></div>
           </div>
           <div class="action-row">
             <button class="primary-btn" data-screen="add-transaction-screen">Add Transaction</button>
@@ -113,7 +118,7 @@
           <div class="top-card-header">
             <div>
               <h2>Spending Breakdown</h2>
-              <p class="subtle">$<span id="breakdown-total">2,579</span> spent this month</p>
+              <p class="subtle">$<span id="overall-amount">2,579</span> spent this month</p>
             </div>
             <div class="shield"></div>
           </div>
@@ -209,10 +214,8 @@
                 <option value="Transport">Transport</option>
                 <option value="Entertainment">Entertainment</option>
                 <option value="Rent">Rent</option>
-                <option value="Utilities">Utilities</option>
                 <option value="Eating Out">Eating Out</option>
                 <option value="Savings">Savings</option>
-                <option value="Miscellaneous">Miscellaneous</option>
               </select>
             </label>
             <label>
