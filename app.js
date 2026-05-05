@@ -56,24 +56,6 @@ let state = {
   ]
 };
 
-// Load user data from localStorage
-function loadUserData(username) {
-  const userData = localStorage.getItem(`user_${username}`);
-  if (userData) {
-    return JSON.parse(userData);
-  }
-  return { ...defaultData };
-}
-
-// Save user data to localStorage
-function saveUserData(username) {
-  localStorage.setItem(`user_${username}`, JSON.stringify({
-    budget: state.budget,
-    spent: state.spent,
-    transactions: state.transactions
-  }));
-}
-
 function showScreen(screenId) {
   screens.forEach(screen => screen.classList.toggle('active', screen.id === screenId));
   navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.screen === screenId));
@@ -121,6 +103,8 @@ function updateSpending() {
   if (totalAmount >= state.budget) {
       budgetAlert.style.display = "block";
       overspendAmount.textContent = `$${totalAmount - state.budget}`;
+  } else {
+      budgetAlert.style.display = "none";
   }
 }
 
@@ -182,10 +166,6 @@ loginForm.addEventListener('submit', event => {
   const password = passwordInput.value.trim();
   if (!username || !password) return;
   state.user = username;
-  const userData = loadUserData(username);
-  state.budget = userData.budget;
-  state.spent = userData.spent;
-  state.transactions = userData.transactions;
   usernameInput.value = '';
   passwordInput.value = '';
   showScreen('dashboard-screen');
@@ -220,7 +200,6 @@ signupForm.addEventListener('submit', event => {
 });
 
 logoutBtn.addEventListener('click', () => {
-  saveUserData(state.user);
   state.user = 'User';
   state.budget = 3000;
   state.spent = 2579;

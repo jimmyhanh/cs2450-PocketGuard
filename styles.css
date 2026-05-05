@@ -36,6 +36,8 @@ button {
 .app-shell {
   min-height: calc(100vh - 70px);
   padding: 24px 20px 0;
+  overflow-y: scroll !important;
+  padding-bottom: 150px;
 }
 
 .card {
